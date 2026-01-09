@@ -7,7 +7,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import * as THREE from 'three'
 import { PoseApplier } from '../PoseApplier'
-import { Pose } from '@/types/pose'
+import type { Pose } from '../../types/pose'
 
 describe('PoseApplier', () => {
   let bones: Map<string, THREE.Bone>
