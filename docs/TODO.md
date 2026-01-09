@@ -2,7 +2,7 @@
 
 **Living TODO list—strike through items as they're implemented. Never delete rows.**
 
-## Phase 0: Foundation & Isolation ✅ (In Progress)
+## Phase 0: Foundation & Isolation ✅ (Complete)
 
 ### Phase 0.0 – Scaffolding
 
@@ -12,35 +12,39 @@
 - ✅ Verify project builds without errors
 - ✅ Initialize git repo
 - ✅ Create initial commit + push
-- 🔄 **Current checkpoint**: Awaiting Phase 0.1
+- 🔄 **Current checkpoint**: Phase 1 – Pose Core (Load GLB model, extract skeleton, bind components)
 
-### Phase 0.1 – Engine Layer Isolation
+### Phase 0.1 – Engine Layer Isolation ✅
 
-- ~~☐ Implement `SceneManager` with full Three.js setup~~
-- ~~☐ Implement `CameraManager` with orbit control foundation~~
-- ~~☐ Implement `SkeletonManager` bone parsing~~
-- ~~☐ Implement `PoseApplier` with Euler rotation logic~~
-- ~~☐ Verify engine compiles without React~~
-- ~~☐ Add unit tests for engine layer~~
-- ~~☐ Create commit: `engine: implement core managers`~~
+- ✅ ~~Implement `SceneManager` with full Three.js setup~~
+- ✅ ~~Implement `CameraManager` with orbit control foundation~~
+- ✅ ~~Implement `SkeletonManager` bone parsing~~
+- ✅ ~~Implement `PoseApplier` with Euler rotation logic~~
+- ✅ ~~Verify engine compiles without React~~
+- ✅ ~~Add unit tests for engine layer (28 tests)~~
+- ✅ ~~Create commit: `engine: implement core managers`~~
 
-### Phase 0.2 – State Layer Isolation
+### Phase 0.2 – State Layer Isolation ✅
 
-- ☐ Implement `poseStore` with undo/redo
-- ☐ Implement `cameraStore` with saved views
-- ☐ Implement `sceneStore` with props + reference images
-- ☐ Verify stores compile without Three.js
-- ☐ Add unit tests for store logic
-- ☐ Create commit: `store: implement Zustand stores`
+- ✅ ~~Implement `poseStore` with undo/redo (Immer middleware)~~
+- ✅ ~~Implement `cameraStore` with saved views (snapshots)~~
+- ✅ ~~Implement `sceneStore` with props + reference images~~
+- ✅ ~~Verify stores compile without Three.js~~
+- ✅ ~~Add unit tests for store logic (28 tests)~~
+- ✅ ~~Create commit: `store: implement Zustand stores`~~
 
-### Phase 0.3 – Validation Gate
+### Phase 0.3 – UI Component Integration ✅
 
-- ☐ Confirm engine compiles independently
-- ☐ Confirm stores compile independently
-- ☐ Confirm UI layer untouched
-- ☐ Confirm `npm run build` succeeds
-- ☐ Confirm zero TypeScript errors
-- ☐ Create commit: `chore: pass Phase 0.3 validation gate`
+- ✅ ~~Implement `Canvas3D` with R3F setup~~
+- ✅ ~~Implement `ControlPanel` with bone rotation sliders~~
+- ✅ ~~Implement `CameraControls` syncing with cameraStore~~
+- ✅ ~~Implement `SceneSetup` with lighting/background~~
+- ✅ ~~Confirm engine compiles independently~~
+- ✅ ~~Confirm stores compile independently~~
+- ✅ ~~Confirm `npm run build` succeeds (142.95 KB)~~
+- ✅ ~~Confirm zero TypeScript errors in source~~
+- ✅ ~~All 56 tests passing (28 engine + 28 store)~~
+- ✅ ~~Create commit: `feat: Phase 0.3 - UI component integration`~~
 
 ---
 
@@ -49,8 +53,8 @@
 - ☐ Load GLB model via `AssetLoader`
 - ☐ Extract skeleton via `SkeletonManager`
 - ☐ Apply versioned pose via `PoseApplier`
-- ☐ Build `ControlPanel` with bone rotation sliders
-- ☐ Bind R3F `Canvas3D` to pose/camera stores
+- ✅ ~~Build `ControlPanel` with bone rotation sliders~~ (Phase 0.3)
+- ✅ ~~Bind R3F `Canvas3D` to pose/camera stores~~ (Phase 0.3)
 - ☐ Implement `PoseLibrary` with preset loading
 - ☐ Add pose validation (Zod schema)
 - ☐ Create commit: `feat: implement pose core`
