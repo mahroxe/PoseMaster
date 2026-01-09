@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "rigType": "humanoid-v2",
+  "metadata": {
+    "author": "PoseMaster",
+    "createdAt": "2026-01-09T12:00:00Z",
+    "description": "Sitting pose"
+  },
+  "bones": {
+    "Hips": { "x": 90, "y": 0, "z": 0 },
+    "Spine": { "x": -15, "y": 0, "z": 0 },
+    "Chest": { "x": -5, "y": 0, "z": 0 },
+    "Neck": { "x": 10, "y": 0, "z": 0 },
+    "Head": { "x": 5, "y": 0, "z": 0 },
+    "LeftShoulder": { "x": 0, "y": 0, "z": 0 },
+    "LeftArm": { "x": -30, "y": 0, "z": 0 },
+    "LeftForeArm": { "x": -60, "y": 0, "z": 0 },
+    "LeftHand": { "x": 0, "y": 0, "z": 0 },
+    "RightShoulder": { "x": 0, "y": 0, "z": 0 },
+    "RightArm": { "x": -30, "y": 0, "z": 0 },
+    "RightForeArm": { "x": -60, "y": 0, "z": 0 },
+    "RightHand": { "x": 0, "y": 0, "z": 0 },
+    "LeftUpLeg": { "x": 90, "y": 0, "z": 0 },
+    "LeftLeg": { "x": 90, "y": 0, "z": 0 },
+    "LeftFoot": { "x": 0, "y": 0, "z": 0 },
+    "RightUpLeg": { "x": 90, "y": 0, "z": 0 },
+    "RightLeg": { "x": 90, "y": 0, "z": 0 },
+    "RightFoot": { "x": 0, "y": 0, "z": 0 }
+  }
+}

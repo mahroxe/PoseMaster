@@ -1,0 +1,27 @@
+/**
+ * PoseMaster – File Responsibility Checklist
+ *
+ * ☐ This file has a single responsibility
+ * ☐ This file does NOT leak responsibilities from other layers
+ * ☐ This file avoids circular dependencies
+ * ☐ This file follows project architecture rules
+ * ☐ Items below are struck-through when implemented
+ */
+
+/*
+PoseMaster – styles/index.css
+
+☐ Tailwind base, components, utilities
+☐ No component-specific styles
+☐ Imports theme.css
+*/
+@import './theme.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}

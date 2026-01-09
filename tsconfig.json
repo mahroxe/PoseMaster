@@ -1,0 +1,47 @@
+/**
+ * PoseMaster – File Responsibility Checklist
+ *
+ * ☐ This file has a single responsibility
+ * ☐ This file does NOT leak responsibilities from other layers
+ * ☐ This file avoids circular dependencies
+ * ☐ This file follows project architecture rules
+ * ☐ Items below are struck-through when implemented
+ */
+
+/**
+☐ Strict mode enabled (strict: true)
+☐ No implicit any (noImplicitAny: true)
+☐ Path aliases configured (baseUrl, paths)
+☐ DOM + ESNext libs enabled
+☐ JSX set to react-jsx
+*/
+
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

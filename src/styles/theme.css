@@ -1,0 +1,29 @@
+/**
+ * PoseMaster – File Responsibility Checklist
+ *
+ * ☐ This file has a single responsibility
+ * ☐ This file does NOT leak responsibilities from other layers
+ * ☐ This file avoids circular dependencies
+ * ☐ This file follows project architecture rules
+ * ☐ Items below are struck-through when implemented
+ */
+
+/*
+PoseMaster – styles/theme.css
+
+☐ CSS variables for dark theme
+☐ Design tokens (colors, spacing, radii)
+☐ No class definitions
+*/
+
+:root {
+  /* Colors */
+  --background: 222 84% 5%;
+  --foreground: 210 40% 96%;
+  --primary: 210 100% 50%;
+  --secondary: 222 47% 11%;
+  --accent: 0 84% 60%;
+
+  /* Spacing */
+  --radius: 8px;
+}

@@ -1,0 +1,32 @@
+<!--
+ * PoseMaster – File Responsibility Checklist
+ *
+ * ☐ This file has a single responsibility
+ * ☐ This file does NOT leak responsibilities from other layers
+ * ☐ This file avoids circular dependencies
+ * ☐ This file follows project architecture rules
+ * ☐ Items below are struck-through when implemented
+ -->
+
+<!--
+PoseMaster – index.html checklist
+
+☐ Contains only root mounting point (#root)
+☐ Includes meta viewport for mobile
+☐ Does NOT contain app logic
+☐ Does NOT include inline styles
+☐ Loads main.tsx as module
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PoseMaster – AI-Native 3D Posing System</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
