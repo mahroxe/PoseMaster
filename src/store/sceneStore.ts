@@ -67,7 +67,7 @@ export const useSceneStore = create<SceneState>()(
     props: [],
     referenceImages: [],
     activeModelId: null,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1a1a2e',
     backgroundOpacity: 1,
 
     addProp: (prop) =>
@@ -154,7 +154,7 @@ export const useSceneStore = create<SceneState>()(
           state.props = parsed.props || []
           state.referenceImages = parsed.referenceImages || []
           state.activeModelId = parsed.activeModelId || null
-          state.backgroundColor = parsed.backgroundColor || '#ffffff'
+          state.backgroundColor = parsed.backgroundColor || '#1a1a2e'
           state.backgroundOpacity = parsed.backgroundOpacity || 1
         })
       } catch (e) {
