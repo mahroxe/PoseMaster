@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest'
-import { usePoseStore, BoneRotation } from '../poseStore'
+import { usePoseStore } from '../poseStore'
 
 describe('poseStore', () => {
   beforeEach(() => {
