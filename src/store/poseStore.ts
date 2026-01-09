@@ -11,11 +11,11 @@
 /**
  * PoseMaster – src/store/poseStore.ts
  * 
- * ☐ Stores bone rotations (Euler degrees)
- * ☐ Tracks active model ID
- * ☐ Undo/redo history (Immer + snapshots)
- * ☐ Serializable to JSON
- * ☐ No Three.js objects
+ * ✓ Stores bone rotations (Euler degrees)
+ * ✓ Tracks active model ID
+ * ✓ Undo/redo history (Immer + snapshots with timestamps)
+ * ✓ Serializable to JSON (excludes functions)
+ * ✓ No Three.js objects
  */
 
 import { create } from 'zustand'
@@ -27,55 +27,144 @@ export interface BoneRotation {
   z: number
 }
 
+export interface HistoryEntry {
+  bones: Record<string, BoneRotation>
+  timestamp: number
+  description?: string
+}
+
 export interface PoseState {
   modelId: string | null
   bones: Record<string, BoneRotation>
-  history: Array<Record<string, BoneRotation>>
+  history: HistoryEntry[]
   historyIndex: number
 
   setBoneRotation: (boneName: string, rotation: BoneRotation) => void
+  setBoneRotations: (bones: Record<string, BoneRotation>) => void
   resetPose: () => void
   undo: () => void
   redo: () => void
-  loadPose: (pose: Record<string, BoneRotation>) => void
+  canUndo: () => boolean
+  canRedo: () => boolean
+  loadPose: (pose: Record<string, BoneRotation>, description?: string) => void
+  setModelId: (id: string | null) => void
+  clearHistory: () => void
+  serialize: () => string
+  deserialize: (json: string) => void
 }
 
 export const usePoseStore = create<PoseState>()(
-  immer((set) => ({
+  immer((set, get) => ({
     modelId: null,
     bones: {},
-    history: [{}],
+    history: [{ bones: {}, timestamp: Date.now() }],
     historyIndex: 0,
 
     setBoneRotation: (boneName, rotation) =>
       set((state) => {
         state.bones[boneName] = rotation
+        // Push to history after changes
+        state.history.splice(state.historyIndex + 1)
+        state.history.push({
+          bones: JSON.parse(JSON.stringify(state.bones)),
+          timestamp: Date.now(),
+        })
+        state.historyIndex = state.history.length - 1
+      }),
+
+    setBoneRotations: (bones) =>
+      set((state) => {
+        state.bones = JSON.parse(JSON.stringify(bones))
+        state.history.splice(state.historyIndex + 1)
+        state.history.push({
+          bones: JSON.parse(JSON.stringify(state.bones)),
+          timestamp: Date.now(),
+        })
+        state.historyIndex = state.history.length - 1
       }),
 
     resetPose: () =>
       set((state) => {
         state.bones = {}
+        state.history.splice(state.historyIndex + 1)
+        state.history.push({
+          bones: {},
+          timestamp: Date.now(),
+          description: 'Reset pose',
+        })
+        state.historyIndex = state.history.length - 1
       }),
 
-    undo: () =>
+    undo: () => {
+      const state = get()
+      if (state.historyIndex > 0) {
+        set((s) => {
+          s.historyIndex--
+          s.bones = JSON.parse(JSON.stringify(s.history[s.historyIndex].bones))
+        })
+      }
+    },
+
+    redo: () => {
+      const state = get()
+      if (state.historyIndex < state.history.length - 1) {
+        set((s) => {
+          s.historyIndex++
+          s.bones = JSON.parse(JSON.stringify(s.history[s.historyIndex].bones))
+        })
+      }
+    },
+
+    canUndo: () => get().historyIndex > 0,
+
+    canRedo: () => get().historyIndex < get().history.length - 1,
+
+    loadPose: (pose, description) =>
       set((state) => {
-        if (state.historyIndex > 0) {
-          state.historyIndex--
-          state.bones = state.history[state.historyIndex]
-        }
+        state.bones = JSON.parse(JSON.stringify(pose))
+        state.history.splice(state.historyIndex + 1)
+        state.history.push({
+          bones: JSON.parse(JSON.stringify(state.bones)),
+          timestamp: Date.now(),
+          description,
+        })
+        state.historyIndex = state.history.length - 1
       }),
 
-    redo: () =>
+    setModelId: (id) =>
       set((state) => {
-        if (state.historyIndex < state.history.length - 1) {
-          state.historyIndex++
-          state.bones = state.history[state.historyIndex]
-        }
+        state.modelId = id
       }),
 
-    loadPose: (pose) =>
+    clearHistory: () =>
       set((state) => {
-        state.bones = pose
+        state.history = [
+          { bones: JSON.parse(JSON.stringify(state.bones)), timestamp: Date.now() },
+        ]
+        state.historyIndex = 0
       }),
+
+    serialize: () => {
+      const state = get()
+      return JSON.stringify({
+        modelId: state.modelId,
+        bones: state.bones,
+        history: state.history,
+      })
+    },
+
+    deserialize: (json) => {
+      try {
+        const parsed = JSON.parse(json)
+        set((state) => {
+          state.modelId = parsed.modelId || null
+          state.bones = parsed.bones || {}
+          state.history = parsed.history || [{ bones: {}, timestamp: Date.now() }]
+          state.historyIndex = state.history.length - 1
+        })
+      } catch (e) {
+        console.error('Failed to deserialize pose state:', e)
+      }
+    },
   }))
 )

@@ -20,6 +20,7 @@
 **File**: [src/engine/SceneManager.ts](src/engine/SceneManager.ts)
 
 **Features Implemented**:
+
 - ✅ Create and manage Three.js Scene
 - ✅ Ambient + directional lighting with intensity control
 - ✅ Grid helper (add/remove)
@@ -29,6 +30,7 @@
 - ✅ Dispose resources properly
 
 **Key Methods**:
+
 - `getScene()` – Access underlying Three.js Scene
 - `setBackgroundColor(color)` – Set scene background
 - `setAmbientIntensity(intensity)` – Control ambient light
@@ -46,6 +48,7 @@
 **File**: [src/engine/CameraManager.ts](src/engine/CameraManager.ts)
 
 **Features Implemented**:
+
 - ✅ Perspective camera creation
 - ✅ Position/rotation control
 - ✅ Look-at target system
@@ -57,6 +60,7 @@
 - ✅ State snapshots (serializable)
 
 **Key Methods**:
+
 - `getCamera()` – Access underlying Three.js camera
 - `setSize(width, height)` – Update aspect ratio
 - `setPosition(x, y, z)` – Set camera location
@@ -75,6 +79,7 @@
 **File**: [src/engine/SkeletonManager.ts](src/engine/SkeletonManager.ts)
 
 **Features Implemented**:
+
 - ✅ Parse SkinnedMesh and extract bones
 - ✅ Normalize bone names via alias registry
 - ✅ Bone hierarchy information
@@ -83,6 +88,7 @@
 - ✅ Hierarchy depth calculation
 
 **Key Methods**:
+
 - `loadFromMesh(mesh)` – Extract skeleton from model
 - `getBone(name)` – Get by original name
 - `getBoneByNormalizedName(name)` – Get by standard name
@@ -98,6 +104,7 @@
 **File**: [src/engine/PoseApplier.ts](src/engine/PoseApplier.ts)
 
 **Features Implemented**:
+
 - ✅ Apply versioned pose JSON to bones
 - ✅ Euler angle normalization (-180° to 180°)
 - ✅ Result reporting (success, applied count, failures, warnings)
@@ -107,6 +114,7 @@
 - ✅ Missing bone handling
 
 **Key Methods**:
+
 - `applyPose(pose, bones)` – Apply pose with validation
 - `getBoneRotations(bones)` – Extract current Euler rotations
 - `resetBones(bones)` – Set all bones to identity
@@ -120,7 +128,8 @@
 
 ### Test Suites
 
-#### [src/engine/__tests__/SceneManager.test.ts](src/engine/__tests__/SceneManager.test.ts)
+#### [src/engine/**tests**/SceneManager.test.ts](src/engine/__tests__/SceneManager.test.ts)
+
 - ✅ Scene creation
 - ✅ Default lighting
 - ✅ Background color management
@@ -134,7 +143,8 @@
 
 ---
 
-#### [src/engine/__tests__/CameraManager.test.ts](src/engine/__tests__/CameraManager.test.ts)
+#### [src/engine/**tests**/CameraManager.test.ts](src/engine/__tests__/CameraManager.test.ts)
+
 - ✅ Camera creation
 - ✅ Aspect ratio updates
 - ✅ Position control
@@ -150,7 +160,8 @@
 
 ---
 
-#### [src/engine/__tests__/PoseApplier.test.ts](src/engine/__tests__/PoseApplier.test.ts)
+#### [src/engine/**tests**/PoseApplier.test.ts](src/engine/__tests__/PoseApplier.test.ts)
+
 - ✅ Pose application to bones
 - ✅ Missing bone handling
 - ✅ Angle normalization
@@ -166,12 +177,14 @@
 ## ✅ Build Status
 
 **TypeScript Compilation**: ✅ PASS (0 errors)
+
 - Strict mode enabled
 - No implicit any
 - Path aliases working
 - Test files excluded from build
 
 **Vite Build**: ✅ PASS
+
 ```
 dist/index.html               1.05 kB │ gzip:  0.60 kB
 dist/assets/index-*.css      6.76 kB │ gzip:  2.03 kB
@@ -183,20 +196,21 @@ dist/assets/index-*.js      142.95 kB │ gzip: 45.94 kB
 
 ## 📊 Code Quality
 
-| Metric | Status |
-|--------|--------|
-| TypeScript Strict Mode | ✅ Enabled |
-| No Implicit Any | ✅ Enforced |
-| Test Coverage | ✅ 26 unit tests |
-| Build Success | ✅ Zero errors |
-| No React Imports in Engine | ✅ Verified |
-| No Three.js in Stores | ✅ To verify in Phase 0.2 |
+| Metric                     | Status                    |
+| -------------------------- | ------------------------- |
+| TypeScript Strict Mode     | ✅ Enabled                |
+| No Implicit Any            | ✅ Enforced               |
+| Test Coverage              | ✅ 26 unit tests          |
+| Build Success              | ✅ Zero errors            |
+| No React Imports in Engine | ✅ Verified               |
+| No Three.js in Stores      | ✅ To verify in Phase 0.2 |
 
 ---
 
 ## 🔄 Architectural Isolation Verification
 
 ### Engine Layer (/src/engine/)
+
 ```
 ✅ No React imports
 ✅ No DOM dependencies
@@ -207,6 +221,7 @@ dist/assets/index-*.js      142.95 kB │ gzip: 45.94 kB
 ```
 
 ### Example: SceneManager compiles standalone
+
 ```bash
 tsc --noEmit src/engine/SceneManager.ts
 # ✅ No errors (verified)
@@ -217,6 +232,7 @@ tsc --noEmit src/engine/SceneManager.ts
 ## 📝 Files Modified/Created
 
 ### Engine Layer
+
 - ✅ `src/engine/SceneManager.ts` – Enhanced (174 lines → 226 lines)
 - ✅ `src/engine/CameraManager.ts` – Enhanced (15 lines → 209 lines)
 - ✅ `src/engine/SkeletonManager.ts` – Enhanced (31 lines → 113 lines)
@@ -226,11 +242,13 @@ tsc --noEmit src/engine/SceneManager.ts
 - ✅ `src/engine/__tests__/PoseApplier.test.ts` – Created (190 lines)
 
 ### Configuration
+
 - ✅ `package.json` – Added test scripts + Vitest/UI dependencies
 - ✅ `tsconfig.json` – Added test exclusion
 - ✅ `vitest.config.ts` – Created
 
 ### Documentation
+
 - ✅ `CHANGELOG.md` – Updated with Phase 0.1 work
 - ✅ `docs/TODO.md` – Marked Phase 0.1 complete
 
@@ -239,6 +257,7 @@ tsc --noEmit src/engine/SceneManager.ts
 ## 🎓 Key Architectural Achievements
 
 ### 1. Pure Three.js Engine
+
 ```typescript
 // ✅ No React, no browser APIs
 class SceneManager {
@@ -255,6 +274,7 @@ class SceneManager {
 ```
 
 ### 2. Serializable State
+
 ```typescript
 // CameraManager state is JSON-serializable
 const state = cameraManager.getState()
@@ -268,6 +288,7 @@ const state = cameraManager.getState()
 ```
 
 ### 3. Testable Without DOM
+
 ```typescript
 // Tests run without jsdom (when needed)
 const sceneManager = new SceneManager()
@@ -277,6 +298,7 @@ expect(scene).toBeInstanceOf(THREE.Scene)
 ```
 
 ### 4. Angle Normalization
+
 ```typescript
 // All rotations normalized to -180° to 180°
 normalizeAngle(360) → 0
@@ -290,6 +312,7 @@ normalizeAngle(540) → 180
 ## 🚀 Ready for Phase 0.2
 
 Phase 0.1 completion gates:
+
 - ✅ Engine layer compiles without React
 - ✅ Zero TypeScript errors
 - ✅ Comprehensive unit tests

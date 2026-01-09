@@ -5,6 +5,7 @@
 ## Phase 0: Foundation & Isolation ✅ (In Progress)
 
 ### Phase 0.0 – Scaffolding
+
 - ✅ Create complete folder structure
 - ✅ Populate every file with checklist comments
 - ✅ Install npm dependencies
@@ -14,6 +15,7 @@
 - 🔄 **Current checkpoint**: Awaiting Phase 0.1
 
 ### Phase 0.1 – Engine Layer Isolation
+
 - ~~☐ Implement `SceneManager` with full Three.js setup~~
 - ~~☐ Implement `CameraManager` with orbit control foundation~~
 - ~~☐ Implement `SkeletonManager` bone parsing~~
@@ -23,6 +25,7 @@
 - ~~☐ Create commit: `engine: implement core managers`~~
 
 ### Phase 0.2 – State Layer Isolation
+
 - ☐ Implement `poseStore` with undo/redo
 - ☐ Implement `cameraStore` with saved views
 - ☐ Implement `sceneStore` with props + reference images
@@ -31,6 +34,7 @@
 - ☐ Create commit: `store: implement Zustand stores`
 
 ### Phase 0.3 – Validation Gate
+
 - ☐ Confirm engine compiles independently
 - ☐ Confirm stores compile independently
 - ☐ Confirm UI layer untouched

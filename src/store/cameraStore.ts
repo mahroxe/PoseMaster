@@ -11,38 +11,52 @@
 /**
  * PoseMaster – src/store/cameraStore.ts
  * 
- * ☐ Camera position, rotation, FOV
- * ☐ List of saved named views
- * ☐ Grid/lock/auto-rotate toggles
- * ☐ Serializable
+ * ✓ Camera position, target, FOV
+ * ✓ List of saved named views (snapshots)
+ * ✓ Grid/lock toggles
+ * ✓ Fully serializable
+ * ✓ No Three.js objects
  */
 
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
+export interface CameraSnapshot {
+  position: { x: number; y: number; z: number }
+  target: { x: number; y: number; z: number }
+  fov: number
+  timestamp: number
+  name: string
+}
+
 export interface CameraState {
   position: { x: number; y: number; z: number }
-  rotation: { x: number; y: number; z: number }
+  target: { x: number; y: number; z: number }
   fov: number
-  savedViews: Record<string, CameraState>
+  snapshots: Record<string, CameraSnapshot>
   gridVisible: boolean
   orbitLocked: boolean
 
   setPosition: (x: number, y: number, z: number) => void
-  setRotation: (x: number, y: number, z: number) => void
+  setTarget: (x: number, y: number, z: number) => void
   setFOV: (fov: number) => void
   toggleGrid: () => void
   toggleOrbitLock: () => void
-  saveView: (name: string) => void
-  loadView: (name: string) => void
+  saveSnapshot: (name: string) => void
+  loadSnapshot: (name: string) => void
+  deleteSnapshot: (name: string) => void
+  listSnapshots: () => string[]
+  reset: () => void
+  serialize: () => string
+  deserialize: (json: string) => void
 }
 
 export const useCameraStore = create<CameraState>()(
   immer((set, get) => ({
     position: { x: 0, y: 0, z: 5 },
-    rotation: { x: 0, y: 0, z: 0 },
+    target: { x: 0, y: 0, z: 0 },
     fov: 75,
-    savedViews: {},
+    snapshots: {},
     gridVisible: true,
     orbitLocked: false,
 
@@ -51,14 +65,15 @@ export const useCameraStore = create<CameraState>()(
         state.position = { x, y, z }
       }),
 
-    setRotation: (x, y, z) =>
+    setTarget: (x, y, z) =>
       set((state) => {
-        state.rotation = { x, y, z }
+        state.target = { x, y, z }
       }),
 
     setFOV: (fov) =>
       set((state) => {
-        state.fov = fov
+        const clamped = Math.max(1, Math.min(179, fov))
+        state.fov = clamped
       }),
 
     toggleGrid: () =>
@@ -71,37 +86,71 @@ export const useCameraStore = create<CameraState>()(
         state.orbitLocked = !state.orbitLocked
       }),
 
-    saveView: (name) => {
+    saveSnapshot: (name: string) => {
       const state = get()
       set((s) => {
-        const viewState: CameraState = {
-          position: state.position,
-          rotation: state.rotation,
+        s.snapshots[name] = {
+          position: { ...state.position },
+          target: { ...state.target },
           fov: state.fov,
-          savedViews: {},
-          gridVisible: state.gridVisible,
-          orbitLocked: state.orbitLocked,
-          setPosition: state.setPosition,
-          setRotation: state.setRotation,
-          setFOV: state.setFOV,
-          toggleGrid: state.toggleGrid,
-          toggleOrbitLock: state.toggleOrbitLock,
-          saveView: state.saveView,
-          loadView: state.loadView,
+          timestamp: Date.now(),
+          name,
         }
-        s.savedViews[name] = viewState
       })
     },
 
-    loadView: (name) => {
-      const state = get()
-      const view = state.savedViews[name]
-      if (view) {
+    loadSnapshot: (name: string) => {
+      const snapshot = get().snapshots[name]
+      if (snapshot) {
         set((s) => {
-          s.position = view.position
-          s.rotation = view.rotation
-          s.fov = view.fov
+          s.position = { ...snapshot.position }
+          s.target = { ...snapshot.target }
+          s.fov = snapshot.fov
         })
+      }
+    },
+
+    deleteSnapshot: (name: string) =>
+      set((state) => {
+        delete state.snapshots[name]
+      }),
+
+    listSnapshots: () => Object.keys(get().snapshots),
+
+    reset: () =>
+      set((state) => {
+        state.position = { x: 0, y: 0, z: 5 }
+        state.target = { x: 0, y: 0, z: 0 }
+        state.fov = 75
+        state.gridVisible = true
+        state.orbitLocked = false
+      }),
+
+    serialize: () => {
+      const state = get()
+      return JSON.stringify({
+        position: state.position,
+        target: state.target,
+        fov: state.fov,
+        snapshots: state.snapshots,
+        gridVisible: state.gridVisible,
+        orbitLocked: state.orbitLocked,
+      })
+    },
+
+    deserialize: (json: string) => {
+      try {
+        const parsed = JSON.parse(json)
+        set((state) => {
+          state.position = parsed.position || { x: 0, y: 0, z: 5 }
+          state.target = parsed.target || { x: 0, y: 0, z: 0 }
+          state.fov = parsed.fov || 75
+          state.snapshots = parsed.snapshots || {}
+          state.gridVisible = parsed.gridVisible !== false
+          state.orbitLocked = parsed.orbitLocked || false
+        })
+      } catch (e) {
+        console.error('Failed to deserialize camera state:', e)
       }
     },
   }))
